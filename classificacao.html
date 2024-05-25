@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revesamento BT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .selection {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .dupla-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .dupla {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .dupla:last-child {
+            margin-right: 0;
+        }
+
+        .dupla label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .dupla select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .selection button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .selection button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Revesamento BT</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Jogador</th>
+                <th>Vitórias</th>
+                <th>Partidas</th>
+                <th>%</th>
+            </tr>
+        </thead>
+        <tbody id="tabela_classificacao">
+
+        </tbody>
+    </table>
+    </div>
+
+    <a href="/">Jogos</a>
+
+    <script>
+
+        // Inicializar um objeto para armazenar as estatísticas dos jogadores
+        const estatisticas = {};
+        const jogadores = JSON.parse(localStorage.getItem('players'));
+        const jogos = JSON.parse(localStorage.getItem('jogos')) || [];
+
+        jogadores.forEach(jogador => {
+            estatisticas[jogador] = { vitorias: 0, jogos: 0 };
+        });
+
+        console.log(jogos)
+
+        // Processar cada jogo para atualizar as estatísticas
+        jogos.forEach(data => {
+            estatisticas[data.dupla1_jogador1].jogos += 1;
+            estatisticas[data.dupla1_jogador2].jogos += 1;
+            estatisticas[data.dupla2_jogador1].jogos += 1;
+            estatisticas[data.dupla2_jogador2].jogos += 1;
+
+            if (data.pontuacao_dupla1 > data.pontuacao_dupla2) {
+                estatisticas[data.dupla1_jogador1].vitorias += 1;
+                estatisticas[data.dupla1_jogador2].vitorias += 1;
+            } else if (data.pontuacao_dupla2 > data.pontuacao_dupla1) {
+                estatisticas[data.dupla2_jogador1].vitorias += 1;
+                estatisticas[data.dupla2_jogador2].vitorias += 1;
+            }
+            // Se for empate, não incrementa vitórias para nenhum dos jogadores
+        });
+
+        console.log(estatisticas)
+
+        // ordenar por % de vitórias
+        const estatisticasOrdenadas = Object.entries(estatisticas)
+            .map(([jogador, { vitorias, jogos }]) => ({ jogador, vitorias, jogos }))
+            .sort((a, b) => {
+                const porcentagemA = a.jogos > 0 ? ((a.vitorias / a.jogos) * 100) : 0;
+                const porcentagemB = b.jogos > 0 ? ((b.vitorias / b.jogos) * 100) : 0;
+                return porcentagemB - porcentagemA;
+            });
+
+        document.getElementById('tabela_classificacao').innerHTML = '';
+
+        estatisticasOrdenadas.forEach(({ jogador, vitorias, jogos }) => {
+            const porcentagem = jogos > 0 ? ((vitorias / jogos) * 100).toFixed(2) : 0;
+            const tr = document.createElement('tr');
+            tr.innerHTML += `
+                <td>${jogador}</td>
+                <td>${vitorias}</td>
+                <td>${jogos}</td>
+                <td>${porcentagem}%</td>
+            `;
+            document.getElementById('tabela_classificacao').appendChild(tr);
+        });
+
+    </script>
+</body>
+
+</html>

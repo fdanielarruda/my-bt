@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confrontos de Duplas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .selection, .player-selection {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .dupla-container, .player-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .dupla, .player {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .dupla:last-child, .player:last-child {
+            margin-right: 0;
+        }
+        .dupla label, .player label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .dupla select, .player input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .selection button, .player-selection button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .selection button:hover, .player-selection button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Confrontos de Duplas</h1>
+
+    <div class="player-selection">
+        <h2>Adicionar Jogador</h2>
+        <div class="player-container">
+            <div class="player">
+                <label for="newPlayer">Nome do Jogador:</label>
+                <input type="text" id="newPlayer" placeholder="Digite o nome do jogador">
+            </div>
+        </div>
+        <button onclick="addPlayer()">Adicionar Jogador</button>
+    </div>
+
+    <h2>Lista de Jogadores</h2>
+    <table id="playersTable">
+        <thead>
+            <tr>
+                <th>Jogador</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="lista_de_jogadores">
+        </tbody>
+    </table>
+    
+    <a href="/">Jogos</a>
+
+    <script src="jogos.js"></script>
+    <script>listarJogadores()</script>
+
+</body>
+</html>

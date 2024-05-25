@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revesamento BT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .selection {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .dupla-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .dupla {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .dupla:last-child {
+            margin-right: 0;
+        }
+        .dupla label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .dupla select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .selection button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .selection button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Revesamento BT</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Dupla A</th>
+                <th>Dupla B</th>
+                <th>Placar</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="lista_de_jogos">
+
+        </tbody>
+    </table>
+
+    <div class="selection">
+        <h2>Adicionar Confronto</h2>
+        <div class="dupla-container">
+            <div class="dupla">
+                <label for="player1">Dupla 1:</label>
+                <select id="player1" class="lista_para_confrontos"></select>
+
+                <label for="player2">Dupla 1:</label>
+                <select id="player2" class="lista_para_confrontos"></select>
+            </div>
+            <div class="dupla">
+                <label for="player3">Dupla 2:</label>
+                <select id="player3" class="lista_para_confrontos"></select>
+
+                <label for="player3">Dupla 2:</label>
+                <select id="player4" class="lista_para_confrontos"></select>
+            </div>
+        </div>
+        <button onclick="addGame()">Adicionar Jogo</button>
+    </div>
+
+    <a href="jogadores.html">Adicionar Jogadores</a>
+
+    <script src="jogos.js"></script>
+    <script>
+        listarJogos()
+        listarJogadoresEmSelects()
+    </script>
+</body>
+</html>

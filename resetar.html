@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <title>Resetar</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <h1>Resetar</h1>
+        <p>Tem certeza que deseja resetar o placar?</p>
+        <button onclick="resetar()">Resetar</button>
+        <button onclick="window.location.href = 'index.html'">Cancelar</button>
+        <script src="jogos.js"></script>
+    </body>
+
+    <script>
+        function resetar() {
+            localStorage.removeItem('jogos')
+            window.location.href = 'index.html'
+        }
+    </script>
+</html>
