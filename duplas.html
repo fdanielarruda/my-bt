@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revesamento BT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1,
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+        }
+
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .selection {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .dupla-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .dupla {
+            flex: 1;
+            margin-right: 10px;
+        }
+
+        .dupla:last-child {
+            margin-right: 0;
+        }
+
+        .dupla label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .dupla select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .selection button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .selection button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Revesamento BT</h1>
+
+    <table>
+        <thead id="linha_horizontal">
+
+        </thead>
+        <tbody id="linha_vertical">
+
+        </tbody>
+    </table>
+    </div>
+
+    <a href="/">Jogos</a>
+    <script>
+        tabelaJogadores()
+
+        function contarPares(par1, par2) {
+            let jogos = localStorage.getItem('jogos');
+
+            if (jogos) {
+                let total = 0;
+
+                JSON.parse(jogos).forEach(element => {
+                    if (
+                        (element.dupla1_jogador1 == par1 && element.dupla1_jogador2 == par2) ||
+                        (element.dupla1_jogador1 == par2 && element.dupla1_jogador2 == par1) ||
+                        (element.dupla2_jogador1 == par1 && element.dupla2_jogador2 == par2) ||
+                        (element.dupla2_jogador1 == par2 && element.dupla2_jogador2 == par1)
+                    ) {
+                        total++;
+                    }
+                });
+
+                return total;
+            }
+
+            return 0;
+        }
+
+        function tabelaJogadores() {
+            let players = localStorage.getItem('players');
+
+            if (players) {
+                let jogadores = "";
+
+                // LINHA HORIZONTAL
+                JSON.parse(players).forEach(element => {
+                    jogadores += `
+                        <th>${element}</th>
+                    `;
+                });
+
+                let menu = `
+                    <tr>
+                        <th></th>
+                        ${jogadores}
+                    </tr>
+                `;
+
+                // LINHA VERTICAL
+                let jogadoresVertical = "";
+
+                JSON.parse(players).forEach(element => {
+                    let jogadoresPares = "";
+
+                    JSON.parse(players).forEach(elementPar => {
+                        if (element != elementPar) {
+                            jogadoresPares += `<td>${contarPares(element, elementPar)}</td>`;
+                        } else  {
+                            jogadoresPares += `<td>-</td>`;
+                        }
+                    });
+
+                    jogadoresVertical += `
+                        <tr>
+                            <td>${element}</td>
+                            ${jogadoresPares}
+                        </tr>
+                    `;
+                });
+
+                document.getElementById('linha_horizontal').innerHTML = `
+                    ${menu}
+                    ${jogadoresVertical}
+                `;
+            }
+        }
+    </script>
+</body>
+
+</html>

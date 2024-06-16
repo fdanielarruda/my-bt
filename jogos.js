@@ -53,17 +53,25 @@ function listarJogos() {
 
         JSON.parse(jogos).forEach(element => {
             let placar = '';
+            let classWin1 = '';
+            let classWin2 = '';
 
             if (!element.pontuacao_dupla1 || !element.pontuacao_dupla2) {
                 placar = `<button onclick="adicionarPlacar('${element.id}')">Novo</button>`;
             } else {
                 placar = `${element.pontuacao_dupla1} x ${element.pontuacao_dupla2}`;
+                
+                if (Number(element.pontuacao_dupla1) > Number(element.pontuacao_dupla2)) {
+                    classWin1 = 'win';
+                } else if (Number(element.pontuacao_dupla1) < Number(element.pontuacao_dupla2)) {
+                    classWin2 = 'win';
+                }
             }
 
             document.getElementById('lista_de_jogos').innerHTML += `
                 <tr>
-                    <td>${element.dupla1_jogador1} & ${element.dupla1_jogador2}</td>
-                    <td>${element.dupla2_jogador1} & ${element.dupla2_jogador2}</td>
+                    <td class="${classWin1}">${element.dupla1_jogador1} & ${element.dupla1_jogador2}</td>
+                    <td class="${classWin2}">${element.dupla2_jogador1} & ${element.dupla2_jogador2}</td>
                     <td>${placar}</td>
                     <td>
                         <button onclick="removerJogo('${element.id}')">Remover</button>
